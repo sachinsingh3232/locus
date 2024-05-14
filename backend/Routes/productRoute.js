@@ -8,13 +8,20 @@ const {
   productCountController,
   filterProduct,
 } = require("../Controllers/productController");
-router.route("/createProductController").post(createProductController);
+const isUserAuthenticated = require("../Middleware/auth");
+router
+  .route("/createProductController")
+  .post(isUserAuthenticated,createProductController);
 router
   .route("/getSingleProductController/:slug")
-  .get(getSingleProductController);
-router.route("/deleteProductController/:id").delete(deleteProductController);
-router.route("/productCountController").get(productCountController);
-router.route("/filterProduct").get(filterProduct);
+  .get(isUserAuthenticated,getSingleProductController);
+router
+  .route("/deleteProductController/:id")
+  .delete(isUserAuthenticated,deleteProductController);
+router
+  .route("/productCountController")
+  .get(isUserAuthenticated,productCountController);
+router.route("/filterProduct").get(isUserAuthenticated,filterProduct);
 
 module.exports = router;
 
