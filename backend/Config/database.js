@@ -7,6 +7,7 @@ const connectDB = () => {
       console.log("Database connected");
     })
     .catch((e) => {
+      console.log(e)
       console.log("Database not connected");
     });
 };
