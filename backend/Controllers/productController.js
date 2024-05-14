@@ -162,4 +162,4 @@ const filterProduct = async (req, res) => {
   };
   
    
-exports.module = {createProductController, getProductController, getSingleProductController, deleteProductController,productCountController, outOfStockProductController, filterProduct};
+module.exports = {createProductController, getProductController, getSingleProductController, deleteProductController,productCountController, outOfStockProductController, filterProduct};
