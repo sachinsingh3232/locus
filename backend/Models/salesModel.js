@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const salesSchema = new mongoose.Schema({
-    name: {
+    productId: {
         type: mongoose.ObjectId,
         ref: "category",
         required: true
