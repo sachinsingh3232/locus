@@ -1,9 +1,11 @@
-const ProductModel = require("../Models/productModel");
+const fs = require("fs");
+const slugify = require("slugify");
+const productModel = require("../Models/productModel");
 
 
 const createProductController = async (req, res) => {
     try {
-      const { name, slug, description, price, category, quantity, shipping } =
+      const { name, slug, description, price, category, quantity} =
         req.fields;
       const { photo } = req.files;
   
@@ -85,6 +87,13 @@ const getSingleProductController = async(req, res) => {
 
 const deleteProductController = async (req, res) => {
     try {
+      if(req.user.role != 1){
+        res.status(500).send({
+            success: false,
+            message: "unathorized access",
+          });
+        return;
+      } 
       const product = await productModel
         .findByIdAndDelete(req.params.id)
         .select("-photo");
@@ -117,5 +126,22 @@ const productCountController = async (req, res) => {
       });
     }
   };
-  
-exports.module = {createProductController, getProductController, getSingleProductController, deleteProductController,productCountController};
+  const outOfStockProductController = async(req, res) => {
+    try {
+        const product = await productModel.find({quantity: 0}).select("-photo")
+    .limit(3);
+    res.status(200).send({
+        success: true,
+        product,
+      });
+    } catch (error) {
+        console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error in getting out of stocks products",
+      error,
+    });
+    }  
+  };
+   
+exports.module = {createProductController, getProductController, getSingleProductController, deleteProductController,productCountController, outOfStockProductController};

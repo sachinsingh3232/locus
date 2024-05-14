@@ -25,15 +25,11 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    sales: {
-        type: Number,
-        required: true
-    },
     photo: {
         data: Buffer,
         contentType: String
     },
 }, { timestamps: true })
 
-const Product = new mongoose.model('User', userSchema);
+const Product = new mongoose.model('Product', productSchema);
 module.exports = Product;
